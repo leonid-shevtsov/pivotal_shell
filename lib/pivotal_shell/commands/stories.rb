@@ -9,7 +9,8 @@ module PivotalShell::Commands
       available_types = %w(features bugs chores)
 
       opts = OptionParser.new do |opts|
-        opts.banner = "List Pivotal stories\nUsage: pivotal stories [options]\n\nThe default is to show all unfinished stories assigned to yourself\n\n"
+        opts.banner = "List Pivotal stories\nUsage: pivotal stories [options]\n\nThe default is to show all unfinished stories assigned to yourself\n\nDisplay format:\n  [id]\n  type: Feature/Bug/Chore\n  estimate: * (irrelevant)/0/1/2/3\n  state: . (unscheduled)/Unstarted/Started/Finished/Delivered/Accepted/Rejected\n  title\n\nOptions:"
+        
         
         opts.on('--all', 'Show all tasks (reset default filter on state and owner)') do
           @options[:all] = true
