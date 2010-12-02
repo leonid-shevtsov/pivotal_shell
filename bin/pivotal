@@ -1,12 +1,36 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'pivotal_shell'
 require 'pivotal_shell/configuration'
 #require 'active_support/core_ext'
 
 PivotalShell::Configuration.load
 
+options = {}
+
+commands = {
+  'stories' => 'show a list of stories',
+  'story' => 'show information about a specific story',
+}
+
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Pivotal command-line client\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\nAvailable options:\n\n"
+  
+  opts.on_tail('--help', 'Show this help') do
+    puts opts
+    exit
+  end
+end
+
+option_parser.parse!
+
 command = ARGV.shift
+
+unless commands.keys.include?(command)
+  puts option_parser
+  exit
+end
 
 require "pivotal_shell/commands/#{command}"
 
