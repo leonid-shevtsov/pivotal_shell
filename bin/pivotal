@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'pivotal_shell'
+require 'pivotal_shell/configuration'
+#require 'active_support/core_ext'
+
+PivotalShell::Configuration.load
+
+command = ARGV.shift
+
+require "pivotal_shell/commands/#{command}"
+
+command_class = PivotalShell::Commands.const_get(command[0,1].upcase+command[1..-1])
+
+command_class.new(ARGV).execute
