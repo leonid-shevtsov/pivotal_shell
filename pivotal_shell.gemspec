@@ -9,8 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Leonid Shevtsov"]
   s.email       = ["leonid@shevtsov.me"]
   s.homepage    = "http://rubygems.org/gems/pivotal_shell"
-  s.summary     = %q{Pivotal shell}
-  s.description = %q{}
+  s.summary     = %q{A command-line client for Pivotal Tracker}
 
   s.add_dependency 'pivotal-tracker', '=0.3'
 

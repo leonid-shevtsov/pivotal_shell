@@ -1,10 +1,12 @@
 require 'pivotal_tracker'
-require 'pivotal_shell/command'
 
 module PivotalShell
   class Exception < StandardError; end
 end
 
+require 'pivotal_shell/command'
+
+# fixing pivotal-tracker's options encoding; it did not work with array filters
 module PivotalTracker
   class <<self
     def encode_options(options)
