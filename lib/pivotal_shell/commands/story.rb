@@ -5,7 +5,12 @@ module PivotalShell::Commands
   class PivotalShell::Commands::Story < PivotalShell::Command
     def initialize(options)
       opts = OptionParser.new do |opts|
-        opts.banner = 'Usage: pivotal story STORY_ID'
+        opts.banner = "Show information on a Pivotal story\nUsage: pivotal story STORY_ID [options]\n\n"
+        
+        opts.on_tail('--help', 'Show this help') do
+          puts opts
+          exit
+        end
       end
       opts.parse!(options)
       if options.empty? || options.length>1
@@ -18,15 +23,19 @@ module PivotalShell::Commands
 
     def execute
       @story = PivotalShell::Configuration.project.stories.find(@story_id)
-      puts ["[#{@story.id}] - #{@story.name}",
-            "State: #{@story.current_state}",
-            "Owner: #{@story.owned_by}",
-            "Creator: #{@story.requested_by}",
-            "URL: #{@story.url}",
-            "",
-            "#{@story.description.strip}",
-            "",
-            ""].join("\n")
+      if @story.nil?
+        puts 'Story not found'
+      else
+        puts ["[#{@story.id}] - #{@story.name}",
+              "State: #{@story.current_state}",
+              "Owner: #{@story.owned_by}",
+              "Creator: #{@story.requested_by}",
+              "URL: #{@story.url}",
+              "",
+              "#{@story.description.strip}",
+              "",
+              ""].join("\n")
+      end
     end
   end
 end

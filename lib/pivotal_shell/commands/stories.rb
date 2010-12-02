@@ -3,7 +3,15 @@
 module PivotalShell::Commands
   class PivotalShell::Commands::Stories < PivotalShell::Command
     def initialize(options)
-
+      opts = OptionParser.new do |opts|
+        opts.banner = "List Pivotal stories\nUsage: pivotal stories [options]\n\nThe default is to show all unfinished stories assigned to yourself\n\n"
+        
+        opts.on_tail('--help', 'Show this help') do
+          puts opts
+          exit
+        end
+      end
+      opts.parse!
     end
 
     def execute
