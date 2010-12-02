@@ -37,11 +37,15 @@ module PivotalShell::Configuration
   end
 
   def self.estimate_icon(estimate)
-    estimate.nil? ? '*' : {-1 => '?', 1=>'1', 2=>'2', 3 => '3'}[estimate]
+    estimate.nil? ? '*' : ({-1 => '?', 0 => '0', 1=>'1', 2=>'2', 3 => '3'}[estimate] || "[#{estimate.inspect}]")
   end
 
-  def self.icon(status,estimate)
-    estimate_icon(estimate)+status_icon(status)
+  def self.type_icon(type)
+    {'feature' => 'F', 'chore' => 'C', 'bug' => 'B'}[type]
+  end
+
+  def self.icon(type, status, estimate)
+    type_icon(type) + ' ' + estimate_icon(estimate) + ' ' + status_icon(status)
   end
 
 private

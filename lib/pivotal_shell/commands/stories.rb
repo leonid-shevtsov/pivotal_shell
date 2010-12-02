@@ -3,21 +3,66 @@
 module PivotalShell::Commands
   class PivotalShell::Commands::Stories < PivotalShell::Command
     def initialize(options)
+      @options = {:params => {}}
+
+      available_statuses = %w(unscheduled unstarted started finished delivered accepted rejected)
+      available_types = %w(features bugs chores)
+
       opts = OptionParser.new do |opts|
         opts.banner = "List Pivotal stories\nUsage: pivotal stories [options]\n\nThe default is to show all unfinished stories assigned to yourself\n\n"
         
+        opts.on('--all', 'Show all tasks (reset default filter on state and owner)') do
+          @options[:all] = true
+        end
+
+        available_statuses.each do |status|
+          opts.on("--#{status}", "Show #{status} stories") do
+            @options[:params][:state] ||= []
+            @options[:params][:state] << status
+          end
+        end
+        
+        available_types.each do |type|
+          opts.on("--#{type}", "Show #{type}") do
+            @options[:params][:type] ||= []
+            @options[:params][:type] << type[0..-2] # chomp s
+          end
+        end
+
+        opts.on('--for [USER]', 'Show tasks assigned to USER; accepts comma-separated list') do |user|
+          @options[:params][:owner] = user
+        end
+        
+        opts.on('--unowned', 'Show tasks not assigned to anyone') do
+          @options[:unowned] = true
+        end
+        
+        opts.on('--anyone', 'Show tasks assigned to anyone') do
+          @options[:anyone] = true
+        end
+
+        opts.on('--mine', 'Show your tasks') do
+          @options[:params][:owner] = PivotalShell::Configuration.me
+        end
+
         opts.on_tail('--help', 'Show this help') do
           puts opts
           exit
         end
       end
       opts.parse!
+      
+      @options[:params][:owner] ||= PivotalShell::Configuration.me unless @options[:unowned] || @options[:anyone] || @options[:all]
+      @options[:params][:state] ||= %w(unestimated unstarted started) unless @options[:all]
     end
 
     def execute
-      stories = PivotalShell::Configuration.project.stories.all(:owner => PivotalShell::Configuration.me, :state => %w(unestimated unstarted started))
+      stories = PivotalShell::Configuration.project.stories.all(@options[:params])
+      if @options[:unowned]
+        stories.reject!{|s| !s.owned_by.nil?}
+      end
 
-      puts stories.map{|s| "#{("[#{s.id}]").rjust 12} #{PivotalShell::Configuration.icon(s.current_state,s.estimate)} #{s.name}"}.join("\n")
+      puts stories.empty? ? 'No stories!' : stories.map{|s| "#{("[#{s.id}]").rjust 12} #{PivotalShell::Configuration.icon(s.story_type, s.current_state, s.estimate)} #{s.name.strip}"}.join("\n")
     end
   end
 end
