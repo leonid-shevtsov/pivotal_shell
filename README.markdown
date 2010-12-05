@@ -50,8 +50,6 @@ Show info on a story
     
     pivotal story 123456
 
-## TODO
-
 Start story
 
     pivotal start 123456
@@ -59,6 +57,8 @@ Start story
 Finish story
 
     pivotal finish 123456
+
+## TODO
 
 Commit (with git, all comments after the story id go to git, story id gets appended to comments)
 

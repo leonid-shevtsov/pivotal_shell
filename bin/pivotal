@@ -7,16 +7,23 @@ require 'pivotal_shell/configuration'
 
 PivotalShell::Configuration.load
 
-commands = {
-  'stories' => 'show a list of stories',
-  'story' => 'show information about a specific story',
-}
+commands = [
+  ['stories', 'show a list of stories'],
+  ['story', 'show information about a specific story'],
+  ['start', 'start a story'],
+  ['finish', 'finish a story'],
+]
 
-banner = "Pivotal command-line client\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"
+banner = "Pivotal command-line client #{PivotalShell::VERSION}\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"
+
+if ARGV.length==1 && ARGV[0]=='--version'
+  puts "pivotal #{PivotalShell::VERSION}"
+  exit
+end
 
 command = ARGV.shift
 
-unless commands.keys.include?(command)
+unless commands.map{|c| c[0]}.include?(command)
   puts banner
   exit
 end
