@@ -1,22 +1,3 @@
-#<PivotalTracker::Story:0x90b74f4 
-#@jira_url=nil, 
-#@requested_by="Pavel Pavlovsky", 
-#@name="Add titles for the pages", 
-#@attachments=[], 
-#@project_id=110960, 
-#@jira_id=nil, 
-#@id=5952583, 
-#@current_state="accepted", 
-#@integration_id=nil, 
-#@accepted_at=#<DateTime: 212157861559/86400,1/12,2299161>, 
-#@labels="ui", 
-#@url="http://www.pivotaltracker.com/story/show/5952583", 
-#@estimate=nil, 
-#@description="so they are identified correctly by user.\nto clarify", 
-#@other_id=nil, 
-#@created_at=#<DateTime: 5303878313/2160,1/8,2299161>, 
-#@owned_by="Leonid Shevtsov", 
-#@story_type="chore">
 require 'sqlite3'
 require 'pivotal_shell/configuration'
 require 'pivotal_shell/cache/story'
@@ -73,7 +54,7 @@ protected
       puts 'Retrieving all stories from Pivotal Tracker. This could take a while...'
       load_stories
     else
-      refresh if self[:last_updated_at]+PivotalShell::Configuration.refresh_interval*60 < Time.now
+      refresh if (PivotalShell::Configuration.refresh_interval>0) && (self[:last_updated_at]+PivotalShell::Configuration.refresh_interval*60 < Time.now)
     end
   end
 

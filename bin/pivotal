@@ -13,7 +13,8 @@ commands = [
   ['story', 'show information about a specific story'],
   ['start', 'start a story'],
   ['finish', 'finish a story'],
-  ['commit', 'commit hook menu'],
+  ['update', 'update stories status from the server'],
+  ['reload', 'reload entire project from the server'],
 ]
 
 banner = "Pivotal command-line client #{PivotalShell::VERSION}\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"
