@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/leonid-shevtsov/pivotal_shell"
   s.summary     = %q{A command-line client for Pivotal Tracker}
 
-  s.add_dependency 'pivotal-tracker', '=0.3'
+  s.add_dependency 'pivotal-tracker', '>0.3'
   s.add_dependency 'sqlite3-ruby'
 
   s.files         = `git ls-files`.split("\n")
