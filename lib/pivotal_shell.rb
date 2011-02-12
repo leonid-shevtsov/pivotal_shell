@@ -20,7 +20,7 @@ module PivotalTracker
       end
       # assume remaining key-value pairs describe filters, and encode them as such.
       filters_string = options.map do |key, value|
-        "#{CGI.escape(key.to_s)}%3A#{CGI.escape([value].flatten.map{|v| v.include?(' ') ? '"'+v.to_s+'"' : v.to_s}.join(','))}"
+        "#{CGI.escape(key.to_s)}%3A#{CGI.escape([value].flatten.map{|v| v=v.to_s; v.include?(' ') ? '"'+v+'"' : v}.join(','))}"
       end
       options_strings << "filter=#{filters_string.join('+')}" unless filters_string.empty?
       return "?#{options_strings.join('&')}"

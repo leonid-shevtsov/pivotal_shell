@@ -22,17 +22,17 @@ module PivotalShell::Commands
     end
 
     def execute
-      @story = PivotalShell::Configuration.project.stories.find(@story_id)
+      @story = PivotalShell::Configuration.cache.story(@story_id)
       if @story.nil?
         puts 'Story not found'
       else
-        puts ["[#{@story.id}] - #{@story.name}",
-              "State: #{@story.current_state}",
-              "Owner: #{@story.owned_by}",
-              "Creator: #{@story.requested_by}",
-              "URL: #{@story.url}",
+        puts ["[#{@story['id']}] - #{@story['name']}",
+              "State: #{@story['current_state']}",
+              "Owner: #{@story['owned_by'] && @story['owned_by']['name']}",
+              "Creator: #{@story['requested_by'] && @story['requested_by']['name']}",
+              "URL: #{@story['url']}",
               "",
-              "#{@story.description.strip}",
+              "#{@story['description'].strip}",
               "",
               ""].join("\n")
       end
