@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{A command-line client for Pivotal Tracker}
 
   s.add_dependency 'pivotal-tracker', '=0.3'
+  s.add_dependency 'sqlite3-ruby'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

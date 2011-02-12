@@ -3,6 +3,7 @@ PATH
   specs:
     pivotal_shell (0.1.0)
       pivotal-tracker (= 0.3)
+      sqlite3-ruby
 
 GEM
   remote: http://rubygems.org/
@@ -20,10 +21,12 @@ GEM
       rest-client (~> 1.6.0)
     rest-client (1.6.1)
       mime-types (>= 1.16)
+    sqlite3 (1.3.3)
+    sqlite3-ruby (1.3.3)
+      sqlite3 (>= 1.3.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  pivotal-tracker (= 0.3)
   pivotal_shell!

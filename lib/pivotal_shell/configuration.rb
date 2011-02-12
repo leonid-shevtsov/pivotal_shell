@@ -2,9 +2,13 @@ require 'yaml'
 require 'pivotal_tracker'
 
 module PivotalShell::Configuration
+  DEFAULTS = {
+    'refresh_interval' => 15
+  }
+
   def self.load
     @global_config = YAML.load_file(global_config_path)
-    @project_config = YAML.load_file(project_config_path)
+    @project_config = YAML.load_file(File.join(project_config_path,'.pivotalrc'))
     PivotalTracker::Client.token = @global_config['api_token']
   end
 
@@ -12,8 +16,16 @@ module PivotalShell::Configuration
     @project ||= PivotalTracker::Project.find(@project_config['project_id'])
   end
 
+  def self.cache
+    @cache ||= PivotalShell::Cache.new(File.join(project_config_path,'.pivotal_cache'))
+  end
+
   def self.me
     @me ||= @project_config['me']
+  end
+
+  def self.refresh_interval
+    @refresh_interval ||= @project_config['refresh_interval'] || @global_config['refresh_interval'] || DEFAULTS['refresh_interval']
   end
 
   def self.global_config_path
@@ -58,7 +70,7 @@ private
     if dirs.empty? || File.join(dirs, '.pivotalrc')==global_config_path
       raise PivotalShell::Exception.new('No project .pivotalrc found')
     else
-      File.join(dirs, '.pivotalrc')
+      File.join(dirs)
     end
   end
 end
