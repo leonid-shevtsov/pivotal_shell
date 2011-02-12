@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pivotal_shell (0.1.0)
+    pivotal_shell (0.2.0)
       pivotal-tracker (= 0.3)
       sqlite3-ruby
 

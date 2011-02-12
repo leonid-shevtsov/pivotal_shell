@@ -4,6 +4,7 @@ module PivotalShell
   class Exception < StandardError; end
 end
 
+require 'pivotal_shell/version'
 require 'pivotal_shell/configuration'
 require 'pivotal_shell/cache'
 require 'pivotal_shell/command'
