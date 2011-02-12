@@ -19,6 +19,8 @@
 #@story_type="chore">
 require 'sqlite3'
 require 'pivotal_shell/configuration'
+require 'pivotal_shell/cache/story'
+require 'pivotal_shell/cache/user'
 
 class PivotalShell::Cache
   STORY_ATTRIBUTES=%w(requested_by_id name id current_state accepted_at labels url estimate description created_at owned_by_id story_type)
@@ -58,25 +60,12 @@ class PivotalShell::Cache
     value
   end
 
+
+protected
+
   def users
     @users ||= load_users_from_cache
   end
-
-  def user(id)
-    db.execute('SELECT * FROM users WHERE id=?', id).first
-  end
-
-  def story(id)
-    story = db.execute('SELECT * FROM stories WHERE id=?', id).first
-    unless story.nil?
-      story['owned_by'] = user(story['owned_by_id'])
-      story['requested_by'] = user(story['requested_by_id'])
-      puts story.inspect
-    end
-    story
-  end
-
-protected
 
   def refresh_if_needed
     updated_at = self[:last_updated_at]
