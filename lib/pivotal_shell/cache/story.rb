@@ -45,7 +45,6 @@ class PivotalShell::Cache
 
       query = 'SELECT * FROM stories'
       query << ' WHERE '+conditions.map{|c| "(#{c})"}.join(' AND ') unless conditions.empty?
-      puts query.inspect
       PivotalShell::Configuration.cache.db.execute(query, query_params).map {|r| new(r)}
     end
 
