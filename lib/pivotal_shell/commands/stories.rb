@@ -5,8 +5,6 @@ module PivotalShell::Commands
     def initialize(options)
       @options = {:params => {}}
 
-      available_statuses = %w(unscheduled unstarted started finished delivered accepted rejected)
-      available_types = %w(features bugs chores)
 
       opts = OptionParser.new do |opts|
         opts.banner = "List Pivotal stories\nUsage: pivotal stories [options]\n\nThe default is to show all unfinished stories assigned to yourself\n\nDisplay format:\n  [id]\n  type: Feature/Bug/Chore\n  estimate: * (irrelevant)/0/1/2/3\n  state: . (unscheduled)/Unstarted/Started/Finished/Delivered/Accepted/Rejected\n  title\n\nOptions:"
@@ -16,17 +14,17 @@ module PivotalShell::Commands
           @options[:all] = true
         end
 
-        available_statuses.each do |status|
+        PivotalShell::Cache::Story::STATUSES.each do |status|
           opts.on("--#{status}", "Show #{status} stories") do
             @options[:params][:state] ||= []
             @options[:params][:state] << status
           end
         end
         
-        available_types.each do |type|
-          opts.on("--#{type}", "Show #{type}") do
+        PivotalShell::Cache::Story::TYPES.each do |type|
+          opts.on("--#{type}s", "Show #{type}") do
             @options[:params][:type] ||= []
-            @options[:params][:type] << type[0..-2] # chomp s
+            @options[:params][:type] << type
           end
         end
 
@@ -35,7 +33,7 @@ module PivotalShell::Commands
         end
         
         opts.on('--unowned', 'Show tasks not assigned to anyone') do
-          @options[:unowned] = true
+          @options[:params][:unowned] = true
         end
         
         opts.on('--anyone', 'Show tasks assigned to anyone') do
@@ -58,10 +56,7 @@ module PivotalShell::Commands
     end
 
     def execute
-      stories = PivotalShell::Configuration.project.stories.all(@options[:params])
-      if @options[:unowned]
-        stories.reject!{|s| !s.owned_by.nil?}
-      end
+      stories = PivotalShell::Cache::Story.all(@options[:params])
 
       puts stories.empty? ? 'No stories!' : stories.map{|s| "#{("[#{s.id}]").rjust 12} #{PivotalShell::Configuration.icon(s.story_type, s.current_state, s.estimate)} #{s.name.strip}"}.join("\n")
     end

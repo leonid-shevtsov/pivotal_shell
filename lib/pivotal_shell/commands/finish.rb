@@ -29,6 +29,7 @@ module PivotalShell::Commands
         puts 'Story is not in a started state: '+@story.name
       else
         @story.update(:current_state => 'started')
+        PivotalShell::Configuration.cache.refresh
       end
     end
   end

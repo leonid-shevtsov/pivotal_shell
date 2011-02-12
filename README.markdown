@@ -1,6 +1,6 @@
 # pivotal_shell
 
-A command-line wrapper for [Pivotal Tracker](http://www.pivotaltracker.com)
+A command-line client for [Pivotal Tracker](http://www.pivotaltracker.com)
 
 ## Installation
 

@@ -57,7 +57,7 @@ module PivotalShell::Configuration
   end
 
   def self.icon(type, status, estimate)
-    type_icon(type) + ' ' + estimate_icon(estimate) + ' ' + status_icon(status)
+    type_icon(type).to_s + ' ' + estimate_icon(estimate).to_s + ' ' + status_icon(status).to_s
   end
 
 private

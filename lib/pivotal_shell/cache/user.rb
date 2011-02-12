@@ -19,7 +19,7 @@ class PivotalShell::Cache
     end
     
     def self.find(id)
-      hash = PivotalShell::Configuration.cache.db.execute("SELECT * FROM users WHERE id=?", id).first
+      hash = PivotalShell::Configuration.cache.db.execute("SELECT * FROM users WHERE id=? OR initials=? OR name=? OR email=?", id, id, id, id).first
       hash && new(hash)
     end
 

@@ -31,6 +31,7 @@ module PivotalShell::Commands
         puts 'Story is already finished: '+@story.name
       else
         @story.update(:current_state => 'started')
+        PivotalShell::Configuration.cache.refresh
       end
     end
   end
