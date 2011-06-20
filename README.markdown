@@ -22,6 +22,9 @@ Second, you need to create a `.pivotalrc` in your project root and set up projec
     # these are your initials used in the project
     me: LS
 
+    # add this if your project requires SSL (otherwise you may receive 400 Bad Request)
+    use_ssl: true
+
 Both `.pivotalrc` files are regular YAML files.
 
 ## Usage

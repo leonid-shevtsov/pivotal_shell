@@ -10,6 +10,7 @@ module PivotalShell::Configuration
     @global_config = YAML.load_file(global_config_path)
     @project_config = YAML.load_file(File.join(project_config_path,'.pivotalrc'))
     PivotalTracker::Client.token = @global_config['api_token']
+    PivotalTracker::Client.use_ssl = @project_config['use_ssl']
   end
 
   def self.project
