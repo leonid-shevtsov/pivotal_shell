@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    pivotal_shell (0.2.0)
+    pivotal_shell (0.2.1)
+      highline
       pivotal-tracker (> 0.3)
       sqlite3
 
@@ -11,17 +12,22 @@ GEM
     builder (3.0.0)
     happymapper (0.3.2)
       libxml-ruby (~> 1.1.3)
+    highline (1.6.2)
     libxml-ruby (1.1.4)
     mime-types (1.16)
-    nokogiri (1.4.3.1)
-    pivotal-tracker (0.3.1)
+    nokogiri (1.5.0)
+    pivotal-tracker (0.4.1)
+      builder
       builder
       happymapper (>= 0.3.2)
-      nokogiri (~> 1.4.3.1)
+      happymapper (>= 0.3.2)
+      nokogiri (>= 1.4.3)
+      nokogiri (~> 1.4)
       rest-client (~> 1.6.0)
-    rest-client (1.6.1)
+      rest-client (~> 1.6.0)
+    rest-client (1.6.3)
       mime-types (>= 1.16)
-    sqlite3 (1.3.3)
+    sqlite3 (1.3.4)
 
 PLATFORMS
   ruby

@@ -3,3 +3,4 @@ pkg/*
 .bundle
 .pivotalrc
 .pivotal_cache
+.rvmrc

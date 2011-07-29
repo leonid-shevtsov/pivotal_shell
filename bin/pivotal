@@ -4,6 +4,7 @@ require 'optparse'
 require 'pivotal_shell'
 require 'pivotal_shell/configuration'
 require 'pivotal_shell/cache'
+require 'highline/import'
 #require 'active_support/core_ext'
 
 PivotalShell::Configuration.load
@@ -15,6 +16,7 @@ commands = [
   ['finish', 'finish a story'],
   ['update', 'update stories status from the server'],
   ['reload', 'reload entire project from the server'],
+  ['commithook', 'commit hook for git']
 ]
 
 banner = "Pivotal command-line client #{PivotalShell::VERSION}\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"

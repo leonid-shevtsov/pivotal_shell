@@ -41,20 +41,24 @@ module PivotalShell::Configuration
     {
       'unscheduled' => ' ', 
       'unstarted' => '.', 
-      'started' => 'S',
-      'finished' => 'F', 
-      'delivered' => 'D', 
-      'accepted' => 'A', 
-      'rejected' => 'R'
+      'started' => $terminal.color('S', :white),
+      'finished' => $terminal.color('F', :yellow), 
+      'delivered' => $terminal.color('D', :yellow), 
+      'accepted' => $terminal.color('A', :green), 
+      'rejected' => $terminal.color('R', :red)
     }[status]
   end
 
   def self.estimate_icon(estimate)
-    estimate.nil? ? '*' : ({-1 => '?', 0 => '0', 1=>'1', 2=>'2', 3 => '3'}[estimate] || "[#{estimate.inspect}]")
+    (estimate.nil? ? ' ' : ({-1 => '?', 0 => '0', 1=>'1', 2=>'2', 3 => '3'}[estimate] || estimate.to_s)).rjust 2
   end
 
   def self.type_icon(type)
-    {'feature' => 'F', 'chore' => 'C', 'bug' => 'B'}[type]
+    {
+      'feature' => $terminal.color('F', :yellow), 
+      'chore' => $terminal.color('C', :white), 
+      'bug' => $terminal.color('B', :red)
+    }[type]
   end
 
   def self.icon(type, status, estimate)
