@@ -6,10 +6,12 @@ module PivotalShell::Commands
     end
 
     def execute
+      commit_message_lines = @commit_message.split("\n")
+      commit_message_without_comments = commit_message_lines.shift(commit_message_lines.find_index{|line| line =~ /^#/} || commit_message_lines.length)
       File.open(@filename, 'w') do |f|
-        f.puts
+        f.puts commit_message_without_comments.join("\n")
         f.puts stories
-        f.puts @commit_message.lstrip
+        f.puts commit_message_lines.join("\n")
       end
     end
 
