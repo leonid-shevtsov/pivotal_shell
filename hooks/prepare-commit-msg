@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pivotal prepare-commit-msg-hook $*

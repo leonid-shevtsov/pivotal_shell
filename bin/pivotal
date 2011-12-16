@@ -16,8 +16,9 @@ commands = [
   ['finish', 'finish a story'],
   ['update', 'update stories status from the server'],
   ['reload', 'reload entire project from the server'],
-  ['commit-hook', 'commit hook for git'],
-  ['install-hook', 'install the commit hook into git']
+  ['install-hooks', 'install the commit hooks into git'],
+  ['prepare-commit-msg-hook', 'commit hook for git'],
+  ['commit-msg-hook', 'commit hook for git'],
 ]
 
 banner = "Pivotal command-line client #{PivotalShell::VERSION}\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"

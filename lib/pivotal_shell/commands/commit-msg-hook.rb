@@ -1,6 +1,7 @@
 module PivotalShell::Commands
-  class PivotalShell::Commands::CommitHook < PivotalShell::Command
+  class PivotalShell::Commands::CommitMsgHook < PivotalShell::Command
     def initialize(options)
+      exit 0
       @filename = options.first
       @commit_message = File.read(@filename)
     end
