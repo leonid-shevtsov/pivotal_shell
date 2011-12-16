@@ -17,7 +17,7 @@ module PivotalShell::Commands
       @stories = PivotalShell::Cache::Story.all(:owner => PivotalShell::Configuration.me, :state => %w(unstarted started))
       @stories.map { |story|
         story_id = "[\##{story.id}]"
-        "\# #{story_id.rjust(13)} #{story.name}"
+        "# #{story_id.rjust(13)} #{story.name}"
       }.join("\n")
     end
   end
