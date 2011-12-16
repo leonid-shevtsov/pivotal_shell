@@ -1,16 +1,19 @@
 module PivotalShell::Commands
-  class PivotalShell::Commands::Commithook < PivotalShell::Command
+  class PivotalShell::Commands::CommitHook < PivotalShell::Command
     def initialize(options)
+      @filename = options.first
+      @commit_message = File.read(@filename)
     end
 
     def execute
+      STDIN.reopen('/dev/tty') unless STDIN.tty?
       begin
         @stories = PivotalShell::Cache::Story.all(:owner => PivotalShell::Configuration.me, :state => %w(unstarted started))
         @stories.each do |story|
           puts "#{highlighted_id(story.id).rjust(12)} #{story.name}"
         end
         puts @error_message if @error_message
-        print 'RACBF>'
+        print 'Story number / (R)efresh / (A)bort>'
         response = gets.chomp
         case response
         when 'R', 'r':
@@ -35,11 +38,12 @@ module PivotalShell::Commands
 
       if @story
         print %Q{Confirm attaching commit to story "#{@story.name}" [Yn]:}
-        answer = gets.chomp
+        answer = File.open('/dev/tty','r').gets.chomp
         if answer=='' || (answer[0,1].downcase == 'y')
           puts "COMMIT MESSAGE"
         end
       end
+      exit 1
     end
 
   protected

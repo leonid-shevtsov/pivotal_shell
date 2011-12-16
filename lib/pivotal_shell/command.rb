@@ -3,6 +3,6 @@ class PivotalShell::Command
   end
 
   def execute
-    raise "Override me!"
+    raise NotImplementedError
   end
 end

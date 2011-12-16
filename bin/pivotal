@@ -16,7 +16,8 @@ commands = [
   ['finish', 'finish a story'],
   ['update', 'update stories status from the server'],
   ['reload', 'reload entire project from the server'],
-  ['commithook', 'commit hook for git']
+  ['commit-hook', 'commit hook for git'],
+  ['install-hook', 'install the commit hook into git']
 ]
 
 banner = "Pivotal command-line client #{PivotalShell::VERSION}\nUsage: pivotal COMMAND PARAMS\n\nAvailable commands:\n\n#{commands.map{|c, d| "#{c} - #{d}"}.join("\n")}\n\nRun pivotal COMMAND --help for more info on a specific command\n\n"
@@ -35,6 +36,11 @@ end
 
 require "pivotal_shell/commands/#{command}"
 
-command_class = PivotalShell::Commands.const_get(command[0,1].upcase+command[1..-1])
+command_class_name = command.gsub(/-\w/) {|m| m[1,1].upcase}.gsub(/^\w/) {|m| m.upcase}
+command_class = PivotalShell::Commands.const_get(command_class_name)
 
-command_class.new(ARGV).execute
+begin
+  command_class.new(ARGV).execute
+rescue PivotalTracker::Client::NoToken 
+  puts "Get your API token from https://www.pivotaltracker.com/profile and put it into .pivotalrc"
+end
