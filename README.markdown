@@ -2,7 +2,7 @@
 
 A command-line client for [Pivotal Tracker](http://www.pivotaltracker.com)
 
-**Unmaintained and out of date ([explanation in Russian](http://leonid.shevtsov.me/ru/o-sostoyanii-proekta-pivotal_shell). Feel free to pick it up.**
+**Unmaintained and out of date ([explanation in Russian](http://leonid.shevtsov.me/ru/o-sostoyanii-proekta-pivotal_shell)). Feel free to pick it up.**
 
 ## Installation
 
